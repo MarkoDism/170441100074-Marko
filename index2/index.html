@@ -1,0 +1,175 @@
+<!doctype html><html lang="en" class="no-js"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="x-ua-compatible" content="ie=edge"><meta name="description" content="Tugas Data Mining B"><link rel="canonical" href="https://github.com/MarkoDism/170441100074-Marko/index2/"><meta name="lang:clipboard.copy" content="Copy to clipboard"><meta name="lang:clipboard.copied" content="Copied to clipboard"><meta name="lang:search.language" content="en"><meta name="lang:search.pipeline.stopwords" content="True"><meta name="lang:search.pipeline.trimmer" content="True"><meta name="lang:search.result.none" content="No matching documents"><meta name="lang:search.result.one" content="1 matching document"><meta name="lang:search.result.other" content="# matching documents"><meta name="lang:search.tokenizer" content="[\s\-]+"><link rel="shortcut icon" href="../assets/images/favicon.png"><meta name="generator" content="mkdocs-1.0.4, mkdocs-material-4.3.0"><title>K-NN <small>atau *k-nearestneighbor* with python</small> - 170441100074-Marko</title><link rel="stylesheet" href="../assets/stylesheets/application.4031d38b.css"><link rel="stylesheet" href="../assets/stylesheets/application-palette.224b79ff.css"><meta name="theme-color" content="#3f51b5"><script src="../assets/javascripts/modernizr.74668098.js"></script><link href="https://fonts.gstatic.com" rel="preconnect" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700|Roboto+Mono&display=swap"><style>body,input{font-family:"Roboto","Helvetica Neue",Helvetica,Arial,sans-serif}code,kbd,pre{font-family:"Roboto Mono","Courier New",Courier,monospace}</style><link rel="stylesheet" href="../assets/fonts/material-icons.css"><script>window.ga = window.ga || function() {
+    (ga.q = ga.q || []).push(arguments)
+  }
+  ga.l = +new Date
+  /* Setup integration and send page view */
+  ga("create", "None", "auto")
+  ga("set", "anonymizeIp", true)
+  ga("send", "pageview")
+  /* Register handler to log search on blur */
+  document.addEventListener("DOMContentLoaded", () => {
+    if (document.forms.search) {
+      var query = document.forms.search.query
+      query.addEventListener("blur", function() {
+        if (this.value) {
+          var path = document.location.pathname;
+          ga("send", "pageview", path + "?q=" + this.value)
+        }
+      })
+    }
+  })</script><script async src="https://www.google-analytics.com/analytics.js"></script></head><body dir="ltr" data-md-color-primary="indigo" data-md-color-accent="indigo"><svg class="md-svg"><defs><svg xmlns="http://www.w3.org/2000/svg" width="416" height="448" viewBox="0 0 416 448" id="__github"><path fill="currentColor" d="M160 304q0 10-3.125 20.5t-10.75 19T128 352t-18.125-8.5-10.75-19T96 304t3.125-20.5 10.75-19T128 256t18.125 8.5 10.75 19T160 304zm160 0q0 10-3.125 20.5t-10.75 19T288 352t-18.125-8.5-10.75-19T256 304t3.125-20.5 10.75-19T288 256t18.125 8.5 10.75 19T320 304zm40 0q0-30-17.25-51T296 232q-10.25 0-48.75 5.25Q229.5 240 208 240t-39.25-2.75Q130.75 232 120 232q-29.5 0-46.75 21T56 304q0 22 8 38.375t20.25 25.75 30.5 15 35 7.375 37.25 1.75h42q20.5 0 37.25-1.75t35-7.375 30.5-15 20.25-25.75T360 304zm56-44q0 51.75-15.25 82.75-9.5 19.25-26.375 33.25t-35.25 21.5-42.5 11.875-42.875 5.5T212 416q-19.5 0-35.5-.75t-36.875-3.125-38.125-7.5-34.25-12.875T37 371.5t-21.5-28.75Q0 312 0 260q0-59.25 34-99-6.75-20.5-6.75-42.5 0-29 12.75-54.5 27 0 47.5 9.875t47.25 30.875Q171.5 96 212 96q37 0 70 8 26.25-20.5 46.75-30.25T376 64q12.75 25.5 12.75 54.5 0 21.75-6.75 42 34 40 34 99.5z"/></svg></defs></svg> <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off"> <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off"> <label class="md-overlay" data-md-component="overlay" for="__drawer"></label><a href="#k-nn-atau-k-nearestneighbor-with-python" tabindex="1" class="md-skip">Skip to content </a><header class="md-header" data-md-component="header"><nav class="md-header-nav md-grid"><div class="md-flex"><div class="md-flex__cell md-flex__cell--shrink"><a href="https://github.com/MarkoDism/170441100074-Marko" title="170441100074-Marko" class="md-header-nav__button md-logo"><i class="md-icon"></i></a></div><div class="md-flex__cell md-flex__cell--shrink"><label class="md-icon md-icon--menu md-header-nav__button" for="__drawer"></label></div><div class="md-flex__cell md-flex__cell--stretch"><div class="md-flex__ellipsis md-header-nav__title" data-md-component="title"><span class="md-header-nav__topic">170441100074-Marko</span><span class="md-header-nav__topic">K-NN <small>atau *k-nearestneighbor* with python</small></span></div></div><div class="md-flex__cell md-flex__cell--shrink"><label class="md-icon md-icon--search md-header-nav__button" for="__search"></label><div class="md-search" data-md-component="search" role="dialog"><label class="md-search__overlay" for="__search"></label><div class="md-search__inner" role="search"><form class="md-search__form" name="search"><input type="text" class="md-search__input" name="query" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="query" data-md-state="active"> <label class="md-icon md-search__icon" for="__search"></label> <button type="reset" class="md-icon md-search__icon" data-md-component="reset" tabindex="-1">&#xE5CD;</button></form><div class="md-search__output"><div class="md-search__scrollwrap" data-md-scrollfix><div class="md-search-result" data-md-component="result"><div class="md-search-result__meta">Type to start searching</div><ol class="md-search-result__list"></ol></div></div></div></div></div></div><div class="md-flex__cell md-flex__cell--shrink"><div class="md-header-nav__source"><a href="https://github.com/squidfunk/mkdocs-material" title="Go to repository" class="md-source" data-md-source="github"><div class="md-source__icon"><svg viewBox="0 0 24 24" width="24" height="24"><use xlink:href="#__github" width="24" height="24"></use></svg></div><div class="md-source__repository">squidfunk/mkdocs-material</div></a></div></div></div></nav></header><div class="md-container"><nav class="md-tabs" data-md-component="tabs"><div class="md-tabs__inner md-grid"><ul class="md-tabs__list"><li class="md-tabs__item"><a href=".." title="Decision Tree" class="md-tabs__link md-tabs__link--active">Decision Tree</a></li></ul></div></nav><main class="md-main"><div class="md-main__inner md-grid" data-md-component="container"><div class="md-sidebar md-sidebar--primary" data-md-component="navigation"><div class="md-sidebar__scrollwrap"><div class="md-sidebar__inner"><nav class="md-nav md-nav--primary" data-md-level="0"><label class="md-nav__title md-nav__title--site" for="__drawer"><a href="https://github.com/MarkoDism/170441100074-Marko" title="170441100074-Marko" class="md-nav__button md-logo"><i class="md-icon"></i></a>170441100074-Marko</label><div class="md-nav__source"><a href="https://github.com/squidfunk/mkdocs-material" title="Go to repository" class="md-source" data-md-source="github"><div class="md-source__icon"><svg viewBox="0 0 24 24" width="24" height="24"><use xlink:href="#__github" width="24" height="24"></use></svg></div><div class="md-source__repository">squidfunk/mkdocs-material</div></a></div><ul class="md-nav__list" data-md-scrollfix><li class="md-nav__item"><a href=".." title="Decision Tree" class="md-nav__link">Decision Tree</a></li></ul></nav></div></div></div><div class="md-sidebar md-sidebar--secondary" data-md-component="toc"><div class="md-sidebar__scrollwrap"><div class="md-sidebar__inner"><nav class="md-nav md-nav--secondary"><label class="md-nav__title" for="__toc">Table of contents</label><ul class="md-nav__list" data-md-scrollfix><li class="md-nav__item"><a href="#pengertian" title="Pengertian" class="md-nav__link">Pengertian</a></li><li class="md-nav__item"><a href="#implementasi-dalam-python" title="Implementasi dalam Python" class="md-nav__link">Implementasi dalam Python</a></li><li class="md-nav__item"><a href="#membandingkan-model-kita-dengan-scikit-learn" title="Membandingkan model kita dengan scikit-learn" class="md-nav__link">Membandingkan model kita dengan scikit-learn</a></li></ul></nav></div></div></div><div class="md-content"><article class="md-content__inner md-typeset"><h1 id="k-nn-atau-k-nearestneighbor-with-python">K-NN <small>atau <em>k-nearestneighbor</em> with python</small><a class="headerlink" href="#k-nn-atau-k-nearestneighbor-with-python" title="Permanent link">&para;</a></h1>
+<h2 id="pengertian">Pengertian<a class="headerlink" href="#pengertian" title="Permanent link">&para;</a></h2>
+<p>KNN adalah sebuah metode untuk melakukan klasifikasi terhadap objek berdasarkan data pembelajaran yang jaraknya paling dekat dengan objek tersebut.</p>
+<p>KNN dapat digunakan untuk masalah prediksi klasifikasi dan regresi. Namun, ini lebih banyak digunakan dalam masalah klasifikasi di industri. Untuk mengevaluasi teknik apa pun kita biasanya melihat 3 aspek penting:</p>
+<ol>
+<li>
+<p>Mudah untuk menginterpretasikan output</p>
+</li>
+<li>
+<p>Waktu perhitungan</p>
+</li>
+<li>
+<p>Kekuatan Prediktif</p>
+</li>
+</ol>
+<p>Mari kita ambil beberapa contoh untuk menempatkan KNN dalam skala:</p>
+<p><a href="../assets/images/material.png"><img alt="Material for MkDocs" src="assets/images/images.png" /></a></p>
+<p>Algoritma KNN menunjukkan seluruh parameter pertimbangan. Ini biasanya digunakan untuk interpretasi yang mudah dan waktu perhitungan yang rendah.</p>
+<p>Kita dapat menerapkan model KNN dengan mengikuti langkah-langkah di bawah ini:</p>
+<ol>
+<li>Muat data</li>
+<li>Inisialisasi nilai k</li>
+<li>Untuk mendapatkan kelas yang diprediksi, beralih dari 1 ke jumlah total poin data pelatihan</li>
+<li>Hitung jarak antara data tes dan setiap baris data pelatihan. Di sini kita akan menggunakan jarak Euclidean sebagai metrik jarak kita karena ini adalah metode yang paling populer. Metrik lain yang dapat digunakan adalah Chebyshev, cosinus, dll.</li>
+<li>Urutkan jarak yang dihitung dalam urutan naik berdasarkan nilai jarak</li>
+<li>Dapatkan baris k atas dari array yang diurutkan</li>
+<li>Dapatkan kelas paling sering dari baris ini</li>
+<li>Kembalikan kelas yang diprediksi</li>
+</ol>
+<h2 id="implementasi-dalam-python">Implementasi dalam Python<a class="headerlink" href="#implementasi-dalam-python" title="Permanent link">&para;</a></h2>
+<div class="codehilite"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="kn">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">math</span>
+<span class="kn">import</span> <span class="nn">operator</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span><span class="c1">#### Langkah pertama</span>
+<span class="c1"># Impor data </span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;iris.csv&quot;</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span> 
+</pre></div>
+
+<div class="codehilite"><pre><span></span><span class="c1"># Defining a function which calculates euclidean distance between two data points</span>
+<span class="k">def</span> <span class="nf">euclideanDistance</span><span class="p">(</span><span class="n">data1</span><span class="p">,</span> <span class="n">data2</span><span class="p">,</span> <span class="n">length</span><span class="p">):</span>
+    <span class="n">distance</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">length</span><span class="p">):</span>
+        <span class="n">distance</span> <span class="o">+=</span> <span class="n">np</span><span class="o">.</span><span class="n">square</span><span class="p">(</span><span class="n">data1</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">-</span> <span class="n">data2</span><span class="p">[</span><span class="n">x</span><span class="p">])</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">distance</span><span class="p">)</span>
+
+<span class="c1"># Defining our KNN model</span>
+<span class="k">def</span> <span class="nf">knn</span><span class="p">(</span><span class="n">trainingSet</span><span class="p">,</span> <span class="n">testInstance</span><span class="p">,</span> <span class="n">k</span><span class="p">):</span>
+
+    <span class="n">distances</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">sort</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="n">length</span> <span class="o">=</span> <span class="n">testInstance</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+
+    <span class="c1">#### Start of STEP 3</span>
+    <span class="c1"># Calculating euclidean distance between each row of training data and test data</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">trainingSet</span><span class="p">)):</span>
+
+        <span class="c1">#### Start of STEP 3.1</span>
+        <span class="n">dist</span> <span class="o">=</span> <span class="n">euclideanDistance</span><span class="p">(</span><span class="n">testInstance</span><span class="p">,</span> <span class="n">trainingSet</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">x</span><span class="p">],</span> <span class="n">length</span><span class="p">)</span>
+
+        <span class="n">distances</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">dist</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="c1">#### End of STEP 3.1</span>
+
+    <span class="c1">#### Start of STEP 3.2</span>
+    <span class="c1"># Sorting them on the basis of distance</span>
+    <span class="n">sorted_d</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">distances</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="n">operator</span><span class="o">.</span><span class="n">itemgetter</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+    <span class="c1">#### End of STEP 3.2</span>
+
+    <span class="n">neighbors</span> <span class="o">=</span> <span class="p">[]</span>
+
+    <span class="c1">#### Start of STEP 3.3</span>
+    <span class="c1"># Extracting top k neighbors</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">k</span><span class="p">):</span>
+        <span class="n">neighbors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">sorted_d</span><span class="p">[</span><span class="n">x</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+    <span class="c1">#### End of STEP 3.3</span>
+    <span class="n">classVotes</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="c1">#### Start of STEP 3.4</span>
+    <span class="c1"># Calculating the most freq class in the neighbors</span>
+    <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">neighbors</span><span class="p">)):</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">trainingSet</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">neighbors</span><span class="p">[</span><span class="n">x</span><span class="p">]][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">response</span> <span class="ow">in</span> <span class="n">classVotes</span><span class="p">:</span>
+            <span class="n">classVotes</span><span class="p">[</span><span class="n">response</span><span class="p">]</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">classVotes</span><span class="p">[</span><span class="n">response</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+    <span class="c1">#### End of STEP 3.4</span>
+
+    <span class="c1">#### Start of STEP 3.5</span>
+    <span class="n">sortedVotes</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">classVotes</span><span class="o">.</span><span class="n">items</span><span class="p">(),</span> <span class="n">key</span><span class="o">=</span><span class="n">operator</span><span class="o">.</span><span class="n">itemgetter</span><span class="p">(</span><span class="mi">1</span><span class="p">),</span> <span class="n">reverse</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+    <span class="k">return</span><span class="p">(</span><span class="n">sortedVotes</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">neighbors</span><span class="p">)</span>
+    <span class="c1">#### End of STEP 3.5</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span><span class="c1"># buat datatest</span>
+<span class="n">testSet</span> <span class="o">=</span> <span class="p">[[</span><span class="mf">7.2</span><span class="p">,</span> <span class="mf">3.6</span><span class="p">,</span> <span class="mf">5.1</span><span class="p">,</span> <span class="mf">2.5</span><span class="p">]]</span>
+<span class="n">test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">testSet</span><span class="p">)</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span><span class="c1">#### Start of STEP 2</span>
+<span class="c1"># Setting number of neighbors = 1</span>
+<span class="n">k</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="c1">#### End of STEP 2</span>
+<span class="c1"># Running KNN model</span>
+<span class="n">result</span><span class="p">,</span><span class="n">neigh</span> <span class="o">=</span> <span class="n">knn</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">test</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+
+<span class="c1"># Predicted class</span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span>
+<span class="o">-&gt;</span> <span class="n">Iris</span><span class="o">-</span><span class="n">virginica</span>
+<span class="c1"># Nearest neighbor</span>
+<span class="k">print</span><span class="p">(</span><span class="n">neigh</span><span class="p">)</span>
+<span class="o">-&gt;</span> <span class="p">[</span><span class="mi">141</span><span class="p">]</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span><span class="c1"># Setting number of neighbors = 3 </span>
+<span class="n">k</span> <span class="o">=</span> <span class="mi">3</span> 
+<span class="c1"># Running KNN model </span>
+<span class="n">result</span><span class="p">,</span><span class="n">neigh</span> <span class="o">=</span> <span class="n">knn</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">test</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span> 
+<span class="c1"># Predicted class </span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iris</span><span class="o">-</span><span class="n">virginica</span>
+<span class="c1"># 3 nearest neighbors</span>
+<span class="k">print</span><span class="p">(</span><span class="n">neigh</span><span class="p">)</span>
+<span class="o">-&gt;</span> <span class="p">[</span><span class="mi">141</span><span class="p">,</span> <span class="mi">139</span><span class="p">,</span> <span class="mi">120</span><span class="p">]</span>
+</pre></div>
+
+<div class="codehilite"><pre><span></span><span class="c1"># Setting number of neighbors = 5</span>
+<span class="n">k</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="c1"># Running KNN model </span>
+<span class="n">result</span><span class="p">,</span><span class="n">neigh</span> <span class="o">=</span> <span class="n">knn</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">test</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span> 
+<span class="c1"># Predicted class </span>
+<span class="k">print</span><span class="p">(</span><span class="n">result</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Iris</span><span class="o">-</span><span class="n">virginica</span>
+<span class="c1"># 5 nearest neighbors</span>
+<span class="k">print</span><span class="p">(</span><span class="n">neigh</span><span class="p">)</span>
+<span class="o">-&gt;</span> <span class="p">[</span><span class="mi">141</span><span class="p">,</span> <span class="mi">139</span><span class="p">,</span> <span class="mi">120</span><span class="p">,</span> <span class="mi">145</span><span class="p">,</span> <span class="mi">144</span><span class="p">]</span>
+</pre></div>
+
+<h2 id="membandingkan-model-kita-dengan-scikit-learn">Membandingkan model kita dengan scikit-learn<a class="headerlink" href="#membandingkan-model-kita-dengan-scikit-learn" title="Permanent link">&para;</a></h2>
+<div class="codehilite"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.neighbors</span> <span class="kn">import</span> <span class="n">KNeighborsClassifier</span>
+<span class="n">neigh</span> <span class="o">=</span> <span class="n">KNeighborsClassifier</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">neigh</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">0</span><span class="p">:</span><span class="mi">4</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;Name&#39;</span><span class="p">])</span>
+
+<span class="c1"># Predicted class</span>
+<span class="k">print</span><span class="p">(</span><span class="n">neigh</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">test</span><span class="p">))</span>
+
+<span class="o">-&gt;</span> <span class="p">[</span><span class="s1">&#39;Iris-virginica&#39;</span><span class="p">]</span>
+
+<span class="c1"># 3 nearest neighbors</span>
+<span class="k">print</span><span class="p">(</span><span class="n">neigh</span><span class="o">.</span><span class="n">kneighbors</span><span class="p">(</span><span class="n">test</span><span class="p">)[</span><span class="mi">1</span><span class="p">])</span>
+<span class="o">-&gt;</span> <span class="p">[[</span><span class="mi">141</span> <span class="mi">139</span> <span class="mi">120</span><span class="p">]]</span>
+</pre></div>
+
+<p>Kita dapat melihat bahwa kedua model meramalkan kelas yang sama ('Iris-virginica') dan tetangga terdekat yang sama ([141 139 120]). Oleh karena itu kita dapat menyimpulkan bahwa model kami berjalan seperti yang diharapkan.</p></article></div></div></main><footer class="md-footer"><div class="md-footer-meta md-typeset"><div class="md-footer-meta__inner md-grid"><div class="md-footer-copyright"><div class="md-footer-copyright__highlight">Copyright &copy; 2016 - 2019 Martin Donath</div>powered by <a href="https://www.mkdocs.org">MkDocs</a> and <a href="https://squidfunk.github.io/mkdocs-material/">Material for MkDocs</a></div></div></div></footer></div><script src="../assets/javascripts/application.d5a09f94.js"></script><script>app.initialize({version:"1.0.4",url:{base:".."}})</script></body></html>
